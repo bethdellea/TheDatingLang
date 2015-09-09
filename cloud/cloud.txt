@@ -1,0 +1,33 @@
+https://www.youtube.com/watch?v=3PyApTrRxtc
+
+http://wordcram.org/ (worth looking into more???)
+
+(.py file was written for Python 3, fyi)
+
+http://realtimecollisiondetection.net/
+	(for checking if there's space for the word you want to place)
+		jk, the hardcover for this book is $60, and there's no paperback
+
+https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+
+		worth looking at, I think, since the book up there is so freaking expensive
+
+
+also, I'd still like to consider shaping the word clouds into like restroom sign-style gender markers, tbh
+
+potential collision detection for our word cloud:
+	- https://bitbucket.org/pyglet/pyglet/wiki/Home
+	- http://www.pygame.org/project-pylygon-1718-3432.html
+		(those two are marked as less great for 2d game purposes, but it's still worthwhile)
+
+	- http://arcticpaint.com/projects/rabbyt/
+		(points @ lib2d, which is the new directioon the project took, but forums seem to think this will be most useful)
+		http://coderissues.com/questions/10572540/how-to-do-pixel-perfect-collision-detection-with-rabbyt
+		
+
+
+http://box2d.org/ --- mostly just for my ref, tbh, but it could be interesting/
+useful
+
+js collision detection (prolly won't use, but maybe I will eventually): http://pythonhackers.com/p/jriecken/sat-js/contributors
+
