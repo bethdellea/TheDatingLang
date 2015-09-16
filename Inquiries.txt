@@ -1,0 +1,13 @@
+things we have a control for and can test for in our okc data:
+- pronouns in bios (esp msg if)
+- adj/adv use
+- tense used ?
+- avg length per section, overall
+- ->word ct and word length (per sect & overall)
+- complexity of sentences/length
+- punctuation use
+- introspective/emotion and filler words (feel/know/guess)
+- action words ?
+- passive vs active voice
+
+(need to think for alogrithms for these things, and any prior research to compare to)
