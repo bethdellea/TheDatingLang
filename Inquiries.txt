@@ -3,8 +3,8 @@ things we have a control for and can test for in our okc data:
 - adj/adv use
 - tense used ?
 - avg length per section, overall
-- ->word ct and word length (per sect & overall)
-- complexity of sentences/length
+- ->word ct and num unique words (per sect & overall)
+- length of sentences
 - punctuation use
 - introspective/emotion and filler words (feel/know/guess)
 - action words ?
