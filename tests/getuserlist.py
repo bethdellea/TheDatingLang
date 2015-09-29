@@ -16,3 +16,5 @@ for item in items:
 users.pop(0)
 for i in range(len(users)):
     print(str(i+1)+". "+users[i])
+
+#refresh, rinse, repeat
