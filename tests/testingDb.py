@@ -21,6 +21,7 @@ class OKCdb(object):
         
         self.execute("""CREATE TABLE IF NOT EXISTS Users (
                                  id  INTEGER PRIMARY KEY,
+                                 gender VARCHAR,
                                  orientation VARCHAR,
                                  lookingFor VARCHAR,
                                  age INTEGER,
@@ -158,10 +159,10 @@ class OKCdb(object):
         """Inserts a new user into the Users table, returning the id of the
         row."""        
 
-        sql = """INSERT INTO Users (orientation, lookingFor, age, location, profile0,
+        sql = """INSERT INTO Users (gender, orientation, lookingFor, age, location, profile0,
 profile1, profile2, profile3, profile4, profile5, profile6, profile7, profile8, profile9)
-                 VALUES ('%s','%s','%s','%s','%s','%s','%s','%s',
-                 '%s','%s','%s','%s','%s','%s')""" % (orientation, lookingFor, age, location,
+                 VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s',
+                 '%s','%s','%s','%s','%s','%s')""" % (gender, orientation, lookingFor, age, location,
                                                       profile0, profile1, profile2, profile3,
                                                       profile4, profile5, profile6, profile7,
                                                       profile8, profile9)
@@ -172,12 +173,10 @@ profile1, profile2, profile3, profile4, profile5, profile6, profile7, profile8, 
 
 
 if __name__=='__main__':
-    db = OKCdb('test.db')
+    db = OKCdb('profiles.db')
     print ("database creaeted!")
-    #userID  = db.insertUser(":/", "enemies", "21", "ithaca", "part1", "part2","part3","this part doesnt seem to really exist","part5", "part6", "part7", "part8", "this part also doesnt exist", "part10")
+    #userID  = db.insertUser("bird",":/", "enemies", "21", "ithaca", "part1", "part2","part3","this part doesnt seem to really exist","part5", "part6", "part7", "part8", "this part also doesnt exist", "part10")
     
-
-   # (url, docType, title) =  db.lookupCachedURL_byID(urlID);
 
    # print("User ID in the table: ", userID)
    # print(db.lookupUser_byID(userID))
