@@ -162,10 +162,12 @@ class OKCdb(object):
         sql = """INSERT INTO Users (gender, orientation, lookingFor, age, location, profile0,
 profile1, profile2, profile3, profile4, profile5, profile6, profile7, profile8, profile9)
                  VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s',
-                 '%s','%s','%s','%s','%s','%s')""" % (gender, orientation, lookingFor, age, location,
-                                                      profile0, profile1, profile2, profile3,
-                                                      profile4, profile5, profile6, profile7,
-                                                      profile8, profile9)
+                 '%s','%s','%s','%s','%s','%s')""" % (gender, orientation, lookingFor, age, self._quote(location),
+                                                      self._quote(profile0), self._quote(profile1),
+                                                      self._quote(profile2), self._quote(profile3),
+                                                      self._quote(profile4), self._quote(profile5),
+                                                      self._quote(profile6), self._quote(profile7),
+                                                      self._quote(profile8), self._quote(profile9))
 
         res = self.execute(sql)
         return self.cur.lastrowid
