@@ -50,5 +50,6 @@ def main():
     db = OKCdb("profiles.db")
     for fname in os.listdir("profiles/"):
         scrape_profile(fname, db)
+        print(fname, " has been added to the database.")
     
 main()
