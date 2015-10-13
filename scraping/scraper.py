@@ -16,7 +16,7 @@ import os
 import time
 import random
 
-NUM_USERS_DESIRED = 50
+NUM_USERS_DESIRED = 1000
 
 DEFINITELY_CHROME = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) "
                                    "Chrome/45.0.2454.85 Safari/537.36"}
@@ -63,7 +63,7 @@ def find_matches(users, cj):
                 users.append(user)
 
         if len(users) < NUM_USERS_DESIRED:
-            # this doesn't have to be returned probably? python is weird
+            time.sleep(2)
             return find_matches(users, cj)
         else:
             return users
@@ -123,7 +123,7 @@ def main():
             download_user(u, cj)
             print(u+" downloaded.")
             # i'm definitely not a robot okcupid. totally defintely. its fine
-            waittime = int(5*random.random()) + 5
+            waittime = int(2*random.random()) + 2
             time.sleep(waittime)
         print("Done!")
         # maybe lol
