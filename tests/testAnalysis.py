@@ -50,6 +50,7 @@ Space: the final fronteir. These are the voyages of the Starship Enterprise. Its
     #       - intensifiers
     #   - action words?
     #   - passive vs active voice
+    #   - sentiment analysis (polarity and subjectivity)
     blob = TextBlob(myWords)
     if(blob.detect_language()== "en"):
         
