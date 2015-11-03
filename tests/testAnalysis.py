@@ -1,4 +1,4 @@
-from textblob import TextBlob
+from textblob import *
 
 #opens files with provided  name, gets all of the words into one list and counts them all
 def getFile(name):
@@ -23,27 +23,14 @@ def avgSentLen(sentList):
     avg = length/sz
     return avg
 
+def tenseUsed(textSample):
+    #figure this out I guesssssss
+    return
+
 #input file name here, manage other functions, etc.
 def main():
     myWords = '''
-Implementation Assignment: Canvas Artwork
-
-In this assignment you will use JavaScript and the <canvas> element to create a piece of art. You will also write and include a brief (~150 word) rationale for your artistic decisions. 
-
-Static Artwork
-
-Think about the things that inspire and interest you, and create a piece of art using canvas and JavaScript code.
-
-The easy part: Use variables, loops, arrays, canvas methods, and other JavaScript tools to make visual objects.
-
-The hard part: Create a multimedia experience that produces an emotional, cognitive, or aesthetic response in those who view it. Create something beautiful and meaningful. Create art.
-
-Rationale
-
-Write a ~150 word rationale where you dissect and explore the inspiration and ideas that motivated you to create this art. What is your theory of inspiration, and why were you inspired by this? How are your inspiration and ideas reflected in the implementation? How do you hope others will interpret or understand your artwork?
-
-Requirements
-
+Space: the final fronteir. These are the voyages of the Starship Enterprise. Its five year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.
 '''
 
     #things we said we'd test:
@@ -51,10 +38,16 @@ Requirements
     #   - adj/adv use
     #   - tense used?
     #   - avg length/section and overall
-    #   - word count
-    #   - num unique words
-    #   - length of sentences
+    #   - word count [[DONE]]
+    #   - num unique words --> textblob has a make dict fcn to use!!!!!
+    #   - length of sentences [[DONE]]
     #   - introspective/emotion and filler words
+    #       - "sounding less direct" (wrt disocurse markers)
+    #       - introspective words
+    #       - emotion words
+    #       - koalafiers (probably goes along with sounding less direct)
+    #       - on that note, absolute phrasings
+    #       - intensifiers
     #   - action words?
     #   - passive vs active voice
     blob = TextBlob(myWords)
@@ -69,8 +62,10 @@ Requirements
 
         blobSent = blob.sentences
         aSentLen = avgSentLen(blobSent)
-        print("the average length of a sentence in this sample is ", aSentLen)
-        
+        print("the average length of a sentence in this sample is ", aSentLen, " words")
+        w = Word("cats")
+        w = w.lemmatize()
+        print(w)
     else:
         print("this blob was not in English. NOT COOL.")
 
