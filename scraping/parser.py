@@ -79,21 +79,20 @@ def tenseUsed(textSample):
 
 
 #eventually have the data output to a .csv so excel can do work for us
-
-if __name__=='__main__':
+def doTheThing(profileID):
     db = OKCdb('profiles.db')
    # db.cur.execute("alter table Users add column '%s' 'float'" % "wordCt")
    # db.cur.execute("alter table Users add column '%s' 'float'" % "avgWrdLen")
    # db.cur.execute("alter table Users add column '%s' 'float'" % "avgSentLen")
    # ^^^ adding columns for the data we found and need to store. do for all new data fields. 
     print ("database accessed!")
-    wordsSet = db.getText_byID(30)
+    wordsSet = db.getText_byID(profileID)
     myWords = ""
     for item in wordsSet:
         myWords += item
     blob = TextBlob(myWords)
     print(blob)
-    if(blob.detect_language()== "en"):
+    if(len(myWords) > 3 and blob.detect_language()== "en"):
         
         blobList = blob.words
         wordct = len(blobList)
@@ -109,4 +108,15 @@ if __name__=='__main__':
         w = w.lemmatize()
         print(w)
     else:
-        print("this blob was not in English. NOT COOL.")
+        print("this blob was either not in English or basically empty. NOT COOL.")
+
+
+def main():
+    # future: loop through all profiles
+    doTheThing(1)
+
+if __name__=='__main__':
+    main()
+
+
+  
