@@ -77,6 +77,24 @@ def tenseUsed(textSample):
     #figure this out I guesssssss
     return
 
+def pronouns(blob):
+    """
+    Each time a PRP or PRP$ is found, add the pronoun to a dict of counts.
+    """
+    pronounDict = {}
+    tagList = blob.tags
+    for word, pos in tagList:
+        if pos == "PRP" or pos == "PRP$":
+            word = word.lower()
+            if word not in pronounDict.keys():
+                pronounDict[word] = 1
+            else:
+                pronounDict[word] += 1
+    # how shall we store this information? i do not know. here is a dict
+    for word in pronounDict.keys():
+        print(word+": "+str(pronounDict[word]))
+    return pronounDict
+
 
 #eventually have the data output to a .csv so excel can do work for us
 def doTheThing(profileID):
