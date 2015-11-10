@@ -113,6 +113,14 @@ def pronouns(blob):
         print(word+": "+str(pronounDict[word]))
     return pronounDict
 
+def adj_adv(blob, wdcount):
+    posTagList = ["JJ","JJR","JJS","RB","RBR","RBS"]
+    out = 0.0
+    for word, pos in blob.tags:
+        if pos in posTagList:
+            out += 1
+    return out/wdcount
+
 
 #eventually have the data output to a .csv so excel can do work for us
 def doTheThing(profileID):
