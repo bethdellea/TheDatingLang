@@ -56,6 +56,24 @@ class OKCdb(object):
         else:
             return reslist[0]
 
+    def insertWCt(self, wCT, idNum):
+        """Inserts the word count into the database"""        
+        sql = """UPDATE Users  SET wordCt= '%s' WHERE Id='%s'""" % (wCT, idNum)
+        res = self.execute(sql)
+        return self.cur.lastrowid
+
+    def insertAvgWrdLen(self, wLen, idNum):
+        """Inserts the average word length into the database"""        
+        sql = """UPDATE Users  SET avgWrdLen= '%s' WHERE Id='%s'""" % (wLen, idNum)
+        res = self.execute(sql)
+        return self.cur.lastrowid
+
+    def insertAvgSentLen(self, sentLen, idNum):
+        """Inserts the average sentence length into the database"""        
+        sql = """UPDATE Users  SET avgSentLen= '%s' WHERE Id='%s'""" % (sentLen, idNum)
+        res = self.execute(sql)
+        return self.cur.lastrowid
+
 def avgWordLen(wordList):
     sz = len(wordList)
     length = 0
@@ -97,12 +115,14 @@ def doTheThing(profileID):
         blobList = blob.words
         wordct = len(blobList)
         print ("there are ",wordct," total words in this sample.")
+        #returned = db.insertWCt(wordct, profileID)
         print ("thanks for making me do all this work.")
         avgWLen = avgWordLen(blobList)
         print("the average length of a word in this sample is ", avgWLen)
-
+        returned2 = db.insertAvgWrdLen(avgWLen, profileID)
         blobSent = blob.sentences
         aSentLen = avgSentLen(blobSent)
+        returned3 = db.insertAvgSentLen(aSentLen, profileID)
         print("the average length of a sentence in this sample is ", aSentLen, " words")
         w = Word("cats")
         w = w.lemmatize()
