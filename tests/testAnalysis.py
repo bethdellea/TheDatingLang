@@ -34,8 +34,8 @@ Space: the final fronteir. These are the voyages of the Starship Enterprise. Its
 '''
 
     #things we said we'd test:
-    #   - pronoun use (esp message if)
-    #   - adj/adv use
+    #   - pronoun use (esp message if) [[IN PROGRESS (AND IN QUESTION)]]
+    #   - adj/adv use [[DONE]]
     #   - tense used?
     #   - avg length/section and overall
     #   - word count [[DONE]]
