@@ -129,7 +129,15 @@ def unique_words(tokens):
     return len(stemmed)
 
 
-
+def sentiment_analysis(sentences):
+    polarity = 0
+    subjectivity = 0
+    for sent in sentences:
+        polarity += sent.sentiment.polarity
+        subjectivity += sent.sentiment.subjectivity
+    polarity /= len(sentences)
+    subjectivity /= len(sentences)
+    return polarity, subjectivity
 
 
 #eventually have the data output to a .csv so excel can do work for us
@@ -176,7 +184,10 @@ def main():
     
     for i in range(1296, 1650): #1129-1650 still need to go #not the most responsive solution but idgaf
         doTheThing(i, db)
-#profile 1295 is mean.
+    #profile 1295 is mean.
+    
+
+        
 if __name__=='__main__':
     main()
 

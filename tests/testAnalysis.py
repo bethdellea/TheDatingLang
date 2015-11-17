@@ -39,7 +39,7 @@ Space: the final frontier. These are the voyages of the Starship Enterprise. Its
     #   - tense used?
     #   - avg length/section and overall
     #   - word count [[DONE]]
-    #   - num unique words [[UNTESTED BUT DONE]]
+    #   - num unique words [[DONE]]
     #   - length of sentences [[DONE]]
     #   - introspective/emotion and filler words
     #       - "sounding less direct" (wrt disocurse markers)
@@ -50,7 +50,7 @@ Space: the final frontier. These are the voyages of the Starship Enterprise. Its
     #       - intensifiers
     #   - action words?
     #   - passive vs active voice
-    #   - sentiment analysis (polarity and subjectivity)
+    #   - sentiment analysis (polarity and subjectivity) [[DONE]]
     blob = TextBlob(myWords)
     if(blob.detect_language()== "en"):
         
