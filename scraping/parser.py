@@ -174,9 +174,10 @@ def doTheThing(profileID, db):
 
 def main():
     db = OKCdb('profiles.db')
-    # db.cur.execute("alter table Users add column '%s' 'float'" % "wordCt")
-    # db.cur.execute("alter table Users add column '%s' 'float'" % "avgWrdLen")
-    # db.cur.execute("alter table Users add column '%s' 'float'" % "avgSentLen")
+    # db.cur.execute("alter table Users add column '%s' 'float'" % "advAdjPct")
+    # db.cur.execute("alter table Users add column '%s' 'int'" % "uniqueWords")
+    # db.cur.execute("alter table Users add column '%s' 'float'" % "polarity")
+    # db.cur.execute("alter table Users add column '%s' 'float'" % "subjectivity")
     # ^^^ adding columns for the data we found and need to store. do for all new data fields. 
     print ("database accessed!")
     #will it let me pass the database in to the other function to save our efforts?
