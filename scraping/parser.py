@@ -123,46 +123,53 @@ def adj_adv(blob, wdcount):
 
 
 #eventually have the data output to a .csv so excel can do work for us
-def doTheThing(profileID):
-    db = OKCdb('profiles.db')
-   # db.cur.execute("alter table Users add column '%s' 'float'" % "wordCt")
-   # db.cur.execute("alter table Users add column '%s' 'float'" % "avgWrdLen")
-   # db.cur.execute("alter table Users add column '%s' 'float'" % "avgSentLen")
-   # ^^^ adding columns for the data we found and need to store. do for all new data fields. 
-    print ("database accessed!")
+def doTheThing(profileID, db):
+    print("\nworking on profile ", profileID)
     wordsSet = db.getText_byID(profileID)
     myWords = ""
     for item in wordsSet:
         myWords += item
     blob = TextBlob(myWords)
-    print(blob)
+   # print(blob)
     if(len(myWords) > 3 and blob.detect_language()== "en"):
         
         blobList = blob.words
         wordct = len(blobList)
-        print ("there are ",wordct," total words in this sample.")
-        #returned = db.insertWCt(wordct, profileID)
-        print ("thanks for making me do all this work.")
+        #print ("there are ",wordct," total words in this sample.")
+        returned = db.insertWCt(wordct, profileID)
+        #print ("thanks for making me do all this work.")
         avgWLen = avgWordLen(blobList)
-        print("the average length of a word in this sample is ", avgWLen)
+        #print("the average length of a word in this sample is ", avgWLen)
         returned2 = db.insertAvgWrdLen(avgWLen, profileID)
         blobSent = blob.sentences
         aSentLen = avgSentLen(blobSent)
         returned3 = db.insertAvgSentLen(aSentLen, profileID)
-        print("the average length of a sentence in this sample is ", aSentLen, " words")
-        w = Word("cats")
+        #print("the average length of a sentence in this sample is ", aSentLen, " words")
+        '''w = Word("cats")
         w = w.lemmatize()
         print(w)
+        yeah this isn't worth our time rm
+        '''
     else:
         print("this blob was either not in English or basically empty. NOT COOL.")
 
 
 def main():
-    # future: loop through all profiles
-    doTheThing(1)
-
+    db = OKCdb('profiles.db')
+    # db.cur.execute("alter table Users add column '%s' 'float'" % "wordCt")
+    # db.cur.execute("alter table Users add column '%s' 'float'" % "avgWrdLen")
+    # db.cur.execute("alter table Users add column '%s' 'float'" % "avgSentLen")
+    # ^^^ adding columns for the data we found and need to store. do for all new data fields. 
+    print ("database accessed!")
+    #will it let me pass the database in to the other function to save our efforts?
+        #here's hoping
+    
+    for i in range(1296, 1650): #1129-1650 still need to go #not the most responsive solution but idgaf
+        doTheThing(i, db)
+#profile 1295 is mean.
 if __name__=='__main__':
     main()
 
-
+#punctuation use --- if word ct and sentence length are the same, the person
+    #really had something against proper punctuation :/
   
