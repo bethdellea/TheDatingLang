@@ -1,6 +1,7 @@
 import sqlite3
 import re
 from textblob import *
+from nltk.stem.porter import *
 
 
 class OKCdb(object):
@@ -122,6 +123,15 @@ def adj_adv(blob, wdcount):
     return out/wdcount
 
 
+def unique_words(tokens):
+    stemmer = PorterStemmer()
+    stemmed = [stemmer.stem(token) for token in tokens]
+    return len(stemmed)
+
+
+
+
+
 #eventually have the data output to a .csv so excel can do work for us
 def doTheThing(profileID, db):
     print("\nworking on profile ", profileID)
@@ -133,12 +143,12 @@ def doTheThing(profileID, db):
    # print(blob)
     if(len(myWords) > 3 and blob.detect_language()== "en"):
         
-        blobList = blob.words
-        wordct = len(blobList)
+        tokens = blob.words
+        wordct = len(tokens)
         #print ("there are ",wordct," total words in this sample.")
         returned = db.insertWCt(wordct, profileID)
         #print ("thanks for making me do all this work.")
-        avgWLen = avgWordLen(blobList)
+        avgWLen = avgWordLen(tokens)
         #print("the average length of a word in this sample is ", avgWLen)
         returned2 = db.insertAvgWrdLen(avgWLen, profileID)
         blobSent = blob.sentences

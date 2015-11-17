@@ -30,7 +30,7 @@ def tenseUsed(textSample):
 #input file name here, manage other functions, etc.
 def main():
     myWords = '''
-Space: the final fronteir. These are the voyages of the Starship Enterprise. Its five year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.
+Space: the final frontier. These are the voyages of the Starship Enterprise. Its five year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.
 '''
 
     #things we said we'd test:
@@ -39,7 +39,7 @@ Space: the final fronteir. These are the voyages of the Starship Enterprise. Its
     #   - tense used?
     #   - avg length/section and overall
     #   - word count [[DONE]]
-    #   - num unique words --> textblob has a make dict fcn to use!!!!!
+    #   - num unique words [[UNTESTED BUT DONE]]
     #   - length of sentences [[DONE]]
     #   - introspective/emotion and filler words
     #       - "sounding less direct" (wrt disocurse markers)
