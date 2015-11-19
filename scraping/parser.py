@@ -139,6 +139,22 @@ def sentiment_analysis(sentences):
     subjectivity /= len(sentences)
     return polarity, subjectivity
 
+#the things we've already done but probably still want the functions for
+def doneThings(profileID, db):
+    '''from inside the for loop and if statement of doTheThing'''
+    tokens = blob.words
+    wordct = len(tokens)
+    print ("there are ",wordct," total words in this sample.")
+    returned = db.insertWCt(wordct, profileID)
+    print ("thanks for making me do all this work.")
+    avgWLen = avgWordLen(tokens)
+    print("the average length of a word in this sample is ", avgWLen)
+    returned2 = db.insertAvgWrdLen(avgWLen, profileID)
+    blobSent = blob.sentences
+    aSentLen = avgSentLen(blobSent)
+    eturned3 = db.insertAvgSentLen(aSentLen, profileID)
+    print("the average length of a sentence in this sample is ", aSentLen, " words")
+        
 
 #eventually have the data output to a .csv so excel can do work for us
 def doTheThing(profileID, db):
@@ -153,37 +169,25 @@ def doTheThing(profileID, db):
         
         tokens = blob.words
         wordct = len(tokens)
-        #print ("there are ",wordct," total words in this sample.")
-        returned = db.insertWCt(wordct, profileID)
-        #print ("thanks for making me do all this work.")
-        avgWLen = avgWordLen(tokens)
-        #print("the average length of a word in this sample is ", avgWLen)
-        returned2 = db.insertAvgWrdLen(avgWLen, profileID)
-        blobSent = blob.sentences
-        aSentLen = avgSentLen(blobSent)
-        returned3 = db.insertAvgSentLen(aSentLen, profileID)
-        #print("the average length of a sentence in this sample is ", aSentLen, " words")
-        '''w = Word("cats")
-        w = w.lemmatize()
-        print(w)
-        yeah this isn't worth our time rm
-        '''
+                
     else:
         print("this blob was either not in English or basically empty. NOT COOL.")
 
 
 def main():
     db = OKCdb('profiles.db')
-    # db.cur.execute("alter table Users add column '%s' 'float'" % "advAdjPct")
-    # db.cur.execute("alter table Users add column '%s' 'int'" % "uniqueWords")
-    # db.cur.execute("alter table Users add column '%s' 'float'" % "polarity")
-    # db.cur.execute("alter table Users add column '%s' 'float'" % "subjectivity")
+    #db.cur.execute("alter table Users add column '%s' 'float'" % "advAdjPct")
+    #db.cur.execute("alter table Users add column '%s' 'int'" % "uniqueWords")
+    #db.cur.execute("alter table Users add column '%s' 'float'" % "polarity")
+    #db.cur.execute("alter table Users add column '%s' 'float'" % "subjectivity")
     # ^^^ adding columns for the data we found and need to store. do for all new data fields. 
     print ("database accessed!")
     #will it let me pass the database in to the other function to save our efforts?
         #here's hoping
     
+    
     for i in range(1296, 1650): #1129-1650 still need to go #not the most responsive solution but idgaf
+
         doTheThing(i, db)
     #profile 1295 is mean.
     
