@@ -169,6 +169,10 @@ def doTheThing(profileID, db):
         
         tokens = blob.words
         wordct = len(tokens)
+        adjadv_pct = adj_adv(blob, wordct)
+        pol, subj = sentiment_analysis(blob.sentences)
+        unique = unique_words(tokens)
+        # do something with these
                 
     else:
         print("this blob was either not in English or basically empty. NOT COOL.")
