@@ -3,6 +3,7 @@ import sqlite3
 import re
 from textblob import *
 from nltk.stem.porter import *
+from collections import defaultdict
 
 
 
@@ -152,7 +153,14 @@ def adj_adv(blob, wdcount):
 def unique_words(tokens):
     stemmer = PorterStemmer()
     stemmed = [stemmer.stem(token) for token in tokens]
-    return len(stemmed)
+    stem_dict = defaultdict(int)
+    for word in stemmed:
+        if word in stem_dict:
+            stem_dict[word] += 1
+        else:
+            stem_dict[word] = 1
+    #return len(stemmed)
+    return len(stem_dict)
 
 
 def sentiment_analysis(sentences):
@@ -232,16 +240,20 @@ def doTheThing(profileID, db):
         tokens = blob.words
         wordct = len(tokens)
         if(wordct > 3): #this pulls out the punctuation for us so it works around the empty!!
+            '''
             adjadv_pct = adj_adv(blob, wordct)
             sents = sentiment_analysis(blob.sentences)
             pol = sents[0]
             subj = sents[1]
+            '''
             unique = unique_words(tokens)
+            '''
             # do something with these
             db.insertAdjAdv(adjadv_pct, profileID)
-            db.insertUniqueWds(unique, profileID)
             db.insertPolarity(pol, profileID)
             db.insertSubjectivity(subj, profileID)
+            '''
+            db.insertUniqueWds(unique, profileID)
                 
     else:
         print("this blob was either not in English or basically empty. NOT COOL.")
@@ -259,10 +271,9 @@ def main():
         #here's hoping
     
     
-    for i in range(1650, 1715):  #1650
+    for i in range(1, 1715):  #1650
 
         doTheThing(i, db)
-    
     
 
         
