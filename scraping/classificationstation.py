@@ -99,6 +99,9 @@ def avgSentLen(sentList):
     avg = length/sz
     return avg
 
+from textblob import TextBlob
+from sklearn.feature_extraction.text import TfidfVectorizer
+from .parser import OKCdb
 
 def tenseUsed(textSample):
     #figure this out I guesssssss
@@ -240,4 +243,7 @@ if __name__ == '__main__':
 #punctuation use --- if word ct and sentence length are the same, the person
     #really had something against proper punctuation :/
 
+
+
+main()
 
