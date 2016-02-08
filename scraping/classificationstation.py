@@ -1,3 +1,11 @@
+"""
+Clustering documents instead of classifying them?
+See brandonrose.org/clustering for possibly relevant example of TfidfVectorizer
+See http://scikit-learn.org/stable/modules/feature_extraction.html#tfidf-term-weighting for documentation
+TfidfVectorizer takes a corpus parameter as a list of texts.
+"""
+
+
 import sqlite3
 import re
 from textblob import *
