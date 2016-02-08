@@ -2,6 +2,11 @@ import sqlite3
 import re
 from textblob import *
 from nltk.stem.porter import *
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.cluster import KMeans
+
+
+NUM_OF_PROFILES = 1650
 
 
 class OKCdb(object):
@@ -75,6 +80,7 @@ class OKCdb(object):
         res = self.execute(sql)
         return self.cur.lastrowid
 
+
 def avgWordLen(wordList):
     sz = len(wordList)
     length = 0
@@ -82,6 +88,7 @@ def avgWordLen(wordList):
         length += len(word)
     avg = length/sz
     return avg
+
 
 def avgSentLen(sentList):
     length = 0
@@ -92,9 +99,11 @@ def avgSentLen(sentList):
     avg = length/sz
     return avg
 
+
 def tenseUsed(textSample):
     #figure this out I guesssssss
     return
+
 
 def pronouns(blob):
     """
@@ -113,6 +122,7 @@ def pronouns(blob):
     for word in pronounDict.keys():
         print(word+": "+str(pronounDict[word]))
     return pronounDict
+
 
 def adj_adv(blob, wdcount):
     posTagList = ["JJ","JJR","JJS","RB","RBR","RBS"]
@@ -139,7 +149,8 @@ def sentiment_analysis(sentences):
     subjectivity /= len(sentences)
     return polarity, subjectivity
 
-#the things we've already done but probably still want the functions for
+
+# the things we've already done but probably still want the functions for
 def doneThings(profileID, db):
     '''from inside the for loop and if statement of doTheThing'''
     tokens = blob.words
@@ -156,7 +167,7 @@ def doneThings(profileID, db):
     print("the average length of a sentence in this sample is ", aSentLen, " words")
         
 
-#eventually have the data output to a .csv so excel can do work for us
+# eventually have the data output to a .csv so excel can do work for us
 def doTheThing(profileID, db):
     print("\nworking on profile ", profileID)
     wordsSet = db.getText_byID(profileID)
@@ -164,7 +175,7 @@ def doTheThing(profileID, db):
     for item in wordsSet:
         myWords += item
     blob = TextBlob(myWords)
-   # print(blob)
+    # print(blob)
     if(len(myWords) > 3 and blob.detect_language()== "en"):
         
         tokens = blob.words
@@ -178,6 +189,31 @@ def doTheThing(profileID, db):
         print("this blob was either not in English or basically empty. NOT COOL.")
 
 
+def tokenize(text):
+    blob = TextBlob(text)
+    if len(text) < 3 or blob.detect_language() != "en":
+        return None
+    tokens = blob.words
+    # stemmed_tokens = textblob.packages.nltk.stem idk wowejfkdwnoskfnws
+    return tokens
+
+
+def clustering(db):
+    corpus = {}
+    for i in range(1, NUM_OF_PROFILES+1):
+        text = '\r'.join(db.getText_byID(i))
+        if len(text) > 10:
+            corpus[text] = i
+    tfidf = TfidfVectorizer()
+    matrix = tfidf.fit_transform(corpus.keys())
+    print(matrix)
+    print(tfidf.get_feature_names())
+    km2 = KMeans(n_clusters=2)
+    km2.fit(matrix)
+    clusters = km2.labels_.tolist()
+    print(clusters)
+
+
 def main():
     db = OKCdb('profiles.db')
     #db.cur.execute("alter table Users add column '%s' 'float'" % "advAdjPct")
@@ -185,21 +221,23 @@ def main():
     #db.cur.execute("alter table Users add column '%s' 'float'" % "polarity")
     #db.cur.execute("alter table Users add column '%s' 'float'" % "subjectivity")
     # ^^^ adding columns for the data we found and need to store. do for all new data fields. 
-    print ("database accessed!")
+    print("database accessed!")
     #will it let me pass the database in to the other function to save our efforts?
         #here's hoping
+
+    clustering(db)
     
-    
+    """
     for i in range(1296, 1650): #1129-1650 still need to go #not the most responsive solution but idgaf
 
         doTheThing(i, db)
     #profile 1295 is mean.
-    
+    """
 
-        
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
 
 #punctuation use --- if word ct and sentence length are the same, the person
     #really had something against proper punctuation :/
-  
+
+
