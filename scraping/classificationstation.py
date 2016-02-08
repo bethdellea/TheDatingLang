@@ -8,7 +8,7 @@ TfidfVectorizer takes a corpus parameter as a list of texts.
 
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
-from parser import OKCdb
+from .parser import OKCdb
 
 
 NUM_OF_PROFILES = 2
@@ -50,5 +50,5 @@ def main():
 
 # stopwords = nltk.corpus.stopwords.words('english')
 
-if __name__=='__main__':
-    main()
+
+main()
