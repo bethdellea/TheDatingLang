@@ -56,7 +56,7 @@ class OKCdb(object):
 
 
 
-def swapDBTables:
+def swapDBTables():
     #borrowed from a sqlfiddle linked to by a stack overflow post
         #this is the basic process we'll need to do
     #but we'll look cooler doing it
@@ -73,11 +73,11 @@ def swapDBTables:
 
     DELETE FROM test WHERE _id=2;
 
-    CREATE TABLE test2 AS SELECT * FROM test;
-    DELETE FROM test;
-    DELETE FROM sqlite_sequence WHERE name='test';
-    INSERT INTO test (value) SELECT value FROM test2;
-    DROP TABLE test2;
+    CREATE TABLE Users1 AS SELECT * FROM Users;
+    DELETE FROM Users;
+    DELETE FROM sqlite_sequence WHERE name='Users';
+    INSERT INTO Users (*) SELECT * FROM Users1;
+    DROP TABLE Users1;
     '''
 
 
@@ -106,13 +106,13 @@ def doTheCleanup(profileID, db):
     else:
         print("This profile is either too short or not in English and will be deleted.")
         #also delete it here if there are basically no english words
-   
+        db.deleteEmpty(profileID)
 
 
 
 
 def main():
-    db = OKCdb('profiles.db')
+    db = OKCdb('scraping/profiles.db')
     
     #db.cur.execute("alter table Users add column '%s' 'float'" % "subjectivity")
     # ^^^ adding columns for the data we found and need to store. do for all new data fields. 
@@ -121,11 +121,7 @@ def main():
         #here's hoping
     
     
-    for i in range(1, 1715):  #1650
-
-        doTheCleanup(i, db)
     
-
         
 if __name__=='__main__':
     main()
