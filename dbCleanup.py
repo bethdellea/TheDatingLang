@@ -56,29 +56,19 @@ class OKCdb(object):
 
 
 
-def swapDBTables():
-    #borrowed from a sqlfiddle linked to by a stack overflow post
-        #this is the basic process we'll need to do
-    #but we'll look cooler doing it
-    '''
-
-    CREATE TABLE test (
-      _id INTEGER PRIMARY KEY AUTOINCREMENT,
-      value VARCHAR(32)
-    );
-
-    INSERT INTO test (value) VALUES ('Value#1');
-    INSERT INTO test (value) VALUES ('Value#2');
-    INSERT INTO test (value) VALUES ('Value#3');
-
-    DELETE FROM test WHERE _id=2;
-
-    CREATE TABLE Users1 AS SELECT * FROM Users;
-    DELETE FROM Users;
-    DELETE FROM sqlite_sequence WHERE name='Users';
-    INSERT INTO Users (*) SELECT * FROM Users1;
-    DROP TABLE Users1;
-    '''
+    def swapDBTables(self):
+        
+        self.execute("""CREATE TABLE Users1 AS SELECT * FROM Users;""")
+        self.execute("""DELETE FROM Users;""")
+        self.execute("""INSERT INTO Users (gender, orientation, lookingFor,
+                    age, location, profile0, profile1, profile2, profile3,
+                    profile4, profile5, profile6, profile7, profile8, profile9,
+                    wordCT, avgWrdLen, avgSentLen, advAdjPct, uniqueWords, polarity, subjectivity)
+                    SELECT gender, orientation, lookingFor, age, location, profile0,
+                    profile1, profile2, profile3, profile4, profile5, profile6, profile7,
+                    profile8, profile9, wordCT, avgWrdLen, avgSentLen, advAdjPct,
+                    uniqueWords, polarity, subjectivity FROM Users1;""")
+        self.execute("""DROP TABLE Users1;""")
 
 
 #eventually have the data output to a .csv so excel can do work for us
@@ -119,6 +109,7 @@ def main():
     print ("database accessed!")
     #will it let me pass the database in to the other function to save our efforts?
         #here's hoping
+    db.execute("""DROP TABLE testMove;""")
     
     
     
