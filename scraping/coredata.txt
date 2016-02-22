@@ -1,0 +1,2 @@
+Average profile length ouf of 1556 profiles: 277.48071979434445
+Average Unique Words Used across 1558 profiles: 169.1655969191271
