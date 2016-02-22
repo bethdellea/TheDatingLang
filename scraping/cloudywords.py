@@ -11,6 +11,7 @@ def generate_cloud(text):
     plot.axis("off")
     plot.show()
 
+
 def isFemale(id, db):
     gender = db.getGender_byID(id)
     if gender is None:
@@ -24,10 +25,32 @@ def isFemale(id, db):
         return None
 
 
+def isGay(id, db):
+    orientation = db.getOrientation_byID(id)
+    if orientation is None:
+        return None
+    orientation = ','.join(orientation)
+    if "Straight" in orientation:
+        return False
+    else:
+        return True
+
+
 def gender_everything(db, is_female_desired):
     text = ""
     for i in range(1, NUM_OF_PROFILES+1):
         if isFemale(i, db) == is_female_desired:
+            tiptup = db.getText_byID(i)
+            if tiptup is not None:
+                text += '\r'.join(tiptup)
+
+    generate_cloud(text)
+
+
+def orientation_everything(db, is_gay_desired):
+    text = ""
+    for i in range(1, NUM_OF_PROFILES+1):
+        if isGay(i, db) == is_gay_desired:
             tiptup = db.getText_byID(i)
             if tiptup is not None:
                 text += '\r'.join(tiptup)
@@ -47,7 +70,7 @@ def everyone_everything(db):
 
 def main():
     db = OKCdb("profiles.db")
-    gender_everything(db, False)
+    orientation_everything(db, True)
 
 
 if __name__ == "__main__":
