@@ -67,6 +67,18 @@ class OKCdb(object):
         else:
             return reslist[0]
 
+    def getLookingFor_byID(self, user_id):
+        """
+        Returns orientation from profiles, or None if no matching user_id
+        """
+        sql = "SELECT lookingFor FROM Users WHERE id='%s'" % user_id
+        res = self.execute(sql)
+        reslist = res.fetchall()
+        if reslist == []:
+            return None
+        else:
+            return reslist[0]
+
     def getOrientation_byID(self, user_id):
         """
         Returns orientation from profiles, or None if no matching user_id

@@ -4,8 +4,12 @@ import matplotlib.pyplot as plot
 from scraping.classificationstation import OKCdb, NUM_OF_PROFILES
 
 
+STOPWORDS = {'a', 'an', 'the', 'and', 'but', 'or', 'of', 'to', 'as', 'is', 'in', 'up', 'at', 'on', 'that'}
+
+
 def generate_cloud(text):
-    cloud = WordCloud(max_font_size=40, relative_scaling=.5, font_path="C:/Windows/Fonts/comic.ttf").generate(text)
+    cloud = WordCloud(max_font_size=40, relative_scaling=.5, font_path="C:/Windows/Fonts/comic.ttf",
+                      stopwords=STOPWORDS).generate(text)
     plot.figure()
     plot.imshow(cloud)
     plot.axis("off")
@@ -34,6 +38,19 @@ def isGay(id, db):
         return False
     else:
         return True
+
+
+def lookingfor_everything(db, looking_for):
+    text = ""
+    count = 0
+    for i in range(1, NUM_OF_PROFILES+1):
+        if db.getLookingFor_byID(i)[0] == looking_for:
+            tiptup = db.getText_byID(i)
+            if tiptup is not None:
+                count += 1
+                text += '\r'.join(tiptup)
+    print(count, "profiles")
+    generate_cloud(text)
 
 
 def gender_everything(db, is_female_desired):
@@ -76,9 +93,13 @@ def everyone_everything(db):
 
 def main():
     db = OKCdb("profiles.db")
-    everyone_everything(db)
+    # everyone_everything(db)
     gender_everything(db, True)
     gender_everything(db, False)
+    gender_everything(db, None)
+
+    orientation_everything(db, True)
+    orientation_everything(db, False)
 
 
 if __name__ == "__main__":
