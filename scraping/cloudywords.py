@@ -38,39 +38,47 @@ def isGay(id, db):
 
 def gender_everything(db, is_female_desired):
     text = ""
+    count = 0
     for i in range(1, NUM_OF_PROFILES+1):
         if isFemale(i, db) == is_female_desired:
             tiptup = db.getText_byID(i)
             if tiptup is not None:
+                count += 1
                 text += '\r'.join(tiptup)
-
+    print(count, "profiles")
     generate_cloud(text)
 
 
 def orientation_everything(db, is_gay_desired):
     text = ""
+    count = 0
     for i in range(1, NUM_OF_PROFILES+1):
         if isGay(i, db) == is_gay_desired:
             tiptup = db.getText_byID(i)
             if tiptup is not None:
+                count += 1
                 text += '\r'.join(tiptup)
-
+    print(count, "profiles")
     generate_cloud(text)
 
 
 def everyone_everything(db):
     text = ""
+    count = 0
     for i in range(1, NUM_OF_PROFILES+1):
         tiptup = db.getText_byID(i)
         if tiptup is not None:
+            count += 1
             text += '\r'.join(tiptup)
-
+    print(count, "profiles")
     generate_cloud(text)
 
 
 def main():
     db = OKCdb("profiles.db")
-    orientation_everything(db, True)
+    everyone_everything(db)
+    gender_everything(db, True)
+    gender_everything(db, False)
 
 
 if __name__ == "__main__":

@@ -148,8 +148,6 @@ def bargraph_gender(db, clusters):
     plot.show()
 
 
-
-
 def clustering(db):
     corpus = []
     for i in range(1, NUM_OF_PROFILES+1):
