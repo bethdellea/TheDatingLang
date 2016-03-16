@@ -18,6 +18,7 @@ import numpy
 NUM_OF_PROFILES = 1558
 NUM_CLUSTERS = 4
 
+
 class OKCdb(object):
     def __init__(self, dbfile):
         """
@@ -107,6 +108,21 @@ class OKCdb(object):
         else:
             return reslist[0]
 
+    def getColumn_byID(self, user_id, column_name):
+        """
+        Because I'm kind of done writing a million functions when I could have just written one
+        :param user_id: primary key of user in db
+        :param column_name: str name of column
+        :return: data in column column_name for user with id user_id
+        """
+        sql = "SELECT %s FROM Users WHERE id='%s'" % (column_name, user_id)
+        res = self.execute(sql)
+        reslist = res.fetchall()
+        if reslist == []:
+            return None
+        else:
+            return reslist[0][0]
+
 
 def tokenize(text):
     blob = TextBlob(text)
@@ -185,5 +201,5 @@ def main():
 if __name__ == '__main__':
     main()
 
-#punctuation use --- if word ct and sentence length are the same, the person
-    #really had something against proper punctuation :/
+# punctuation use --- if word ct and sentence length are the same, the person
+# really had something against proper punctuation :/
