@@ -1,15 +1,27 @@
 from wordcloud import WordCloud
 import matplotlib.pyplot as plot
+import scipy
+from PIL import Image
+from os import path
+import numpy as np
 # this import style may only work in pycharm
-from scraping.classificationstation import OKCdb, NUM_OF_PROFILES
+from classificationstation import OKCdb, NUM_OF_PROFILES
 
 
-STOPWORDS = {'a', 'an', 'the', 'and', 'but', 'or', 'of', 'to', 'as', 'is', 'in', 'up', 'at', 'on', 'that'}
+STOPWORDS = {"I'm", "i'm", "I've", "i've", 'i', 'I', 'me', 'my', 'you', 'your', 'they', 'their', 'mine','a', 'an', 'the', 'and', 'but', 'or', 'of', 'to', 'as', 'is', 'in', 'up', 'at', 'on', 'that'}
+#taking out pronouns now because I'm curious
 
+d = path.dirname(__file__)
 
-def generate_cloud(text):
-    cloud = WordCloud(max_font_size=40, relative_scaling=.5, font_path="C:/Windows/Fonts/comic.ttf",
-                      stopwords=STOPWORDS).generate(text)
+gal_mask = np.array(Image.open(path.join(d, "cloudimg/gal.png")))
+guy_mask = np.array(Image.open(path.join(d, "cloudimg/guy.png")))
+none_mask = np.array(Image.open(path.join(d, "cloudimg/none.png")))
+gay_mask = np.array(Image.open(path.join(d, "cloudimg/thuGays.png")))
+str_mask = np.array(Image.open(path.join(d, "cloudimg/thuStr8s.png")))
+
+def generate_cloud(text, maskIn):
+    cloud = WordCloud(background_color="white", max_font_size=40, relative_scaling=.5, font_path="C:/Windows/Fonts/wensleydale_gothic_nbp.ttf",
+                      mask=maskIn, stopwords=STOPWORDS).generate(text)
     plot.figure()
     plot.imshow(cloud)
     plot.axis("off")
@@ -54,6 +66,11 @@ def lookingfor_everything(db, looking_for):
 
 
 def gender_everything(db, is_female_desired):
+    mask = none_mask
+    if is_female_desired == True:
+        mask = gal_mask
+    if is_female_desired == False:
+        mask = guy_mask
     text = ""
     count = 0
     for i in range(1, NUM_OF_PROFILES+1):
@@ -63,10 +80,14 @@ def gender_everything(db, is_female_desired):
                 count += 1
                 text += '\r'.join(tiptup)
     print(count, "profiles")
-    generate_cloud(text)
+    generate_cloud(text, mask)
 
 
 def orientation_everything(db, is_gay_desired):
+    mask = str_mask
+    if is_gay_desired:
+        mask = gay_mask
+
     text = ""
     count = 0
     for i in range(1, NUM_OF_PROFILES+1):
@@ -76,7 +97,7 @@ def orientation_everything(db, is_gay_desired):
                 count += 1
                 text += '\r'.join(tiptup)
     print(count, "profiles")
-    generate_cloud(text)
+    generate_cloud(text, mask)
 
 
 def everyone_everything(db):
@@ -94,12 +115,12 @@ def everyone_everything(db):
 def main():
     db = OKCdb("profiles.db")
     # everyone_everything(db)
-    gender_everything(db, True)
-    gender_everything(db, False)
+    #gender_everything(db, True)
+    #gender_everything(db, False)
     gender_everything(db, None)
 
-    orientation_everything(db, True)
-    orientation_everything(db, False)
+    #orientation_everything(db, True)
+    #orientation_everything(db, False)
 
 
 if __name__ == "__main__":
