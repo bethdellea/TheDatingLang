@@ -8,7 +8,7 @@ import numpy as np
 from classificationstation import OKCdb, NUM_OF_PROFILES
 
 
-STOPWORDS = {"I'm", "i'm", "I've", "i've", 'i', 'I', 'me', 'my', 'you', 'your', 'they', 'their', 'mine','a', 'an', 'the', 'and', 'but', 'or', 'of', 'to', 'as', 'is', 'in', 'up', 'at', 'on', 'that'}
+STOPWORDS = { "I'm", "i'm", "I've", "i've", 'i', 'I', 'me', 'my', 'you', 'your', 'they', 'their', 'mine','a', 'an', 'the', 'and', 'but', 'or', 'of', 'to', 'as', 'is', 'in', 'up', 'at', 'on', 'that'}
 #taking out pronouns now because I'm curious
 
 d = path.dirname(__file__)
@@ -19,6 +19,8 @@ guy_mask = np.array(Image.open(path.join(d, "cloudimg/guy.png")))
 none_mask = np.array(Image.open(path.join(d, "cloudimg/none.png")))
 gay_mask = np.array(Image.open(path.join(d, "cloudimg/thuGays.png")))
 str_mask = np.array(Image.open(path.join(d, "cloudimg/thuStr8s.png")))
+f_gay_mask = np.array(Image.open(path.join(d, "cloudimg/galgay.png")))
+m_gay_mask = np.array(Image.open(path.join(d, "cloudimg/dudegay.png")))
 
 
 def generate_cloud(text, maskIn):
@@ -102,6 +104,29 @@ def orientation_everything(db, is_gay_desired):
     print(count, "profiles")
     generate_cloud(text, mask)
 
+def gender_orientation(db, is_gay_desired, is_female_desired):
+    mask = none_mask
+    if is_female_desired == True and is_gay_desired == True:
+        mask = f_gay_mask 
+    if is_female_desired == False and is_gay_desired == True:
+        mask = m_gay_mask
+    if is_female_desired == False and is_gay_desired == False:
+        mask = guy_mask
+    if is_female_desired == True and is_gay_desired == False:
+        mask = gal_mask
+    #currently the Straights get the basic lady/lord shapes, but that's not a
+    # good way to be, because it's confusing and also it perpetuates the idea
+    #   that straight is the standard and everything else is marked as abnormal
+    text = ""
+    count = 0
+    for i in range(1, NUM_OF_PROFILES+1):
+        if isFemale(i, db) == is_female_desired and isGay(i, db) == is_gay_desired:
+            tiptup = db.getText_byID(i)
+            if tiptup is not None:
+                count += 1
+                text += '\r'.join(tiptup)
+    print(count, "profiles")
+    generate_cloud(text, mask)
 
 def everyone_everything(db):
     text = ""
@@ -117,16 +142,18 @@ def everyone_everything(db):
 
 def main():
     db = OKCdb("profiles.db")
-
-    """
-    # everyone_everything(db)
+    
+    everyone_everything(db)
     #gender_everything(db, True)
     #gender_everything(db, False)
-    gender_everything(db, None)
+    #gender_everything(db, None)
 
-    orientation_everything(db, True)
-    orientation_everything(db, False)
-    """
+    #orientation_everything(db, True)
+    #orientation_everything(db, False)
+    gender_orientation(db, True, True) #gay gals
+    gender_orientation(db, True, False) #gay guys
+    gender_orientation(db, False, True) #straight gals
+    gender_orientation(db, False, False) #straight guys
 
 
 if __name__ == "__main__":
