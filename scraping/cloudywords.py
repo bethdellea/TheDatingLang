@@ -22,7 +22,8 @@ str_mask = np.array(Image.open(path.join(d, "cloudimg/thuStr8s.png")))
 
 
 def generate_cloud(text, maskIn):
-    cloud = WordCloud(background_color="white", max_font_size=40, relative_scaling=.5, font_path="C:/Windows/Fonts/wensleydale_gothic_nbp.ttf",
+    cloud = WordCloud(background_color="white", max_font_size=40, relative_scaling=.5,
+                      font_path="C:/Windows/Fonts/wensleydale_gothic_nbp.ttf",
                       mask=maskIn, stopwords=STOPWORDS).generate(text)
     plot.figure()
     plot.imshow(cloud)
