@@ -5,11 +5,11 @@ from textblob import TextBlob
 from wordcloud import WordCloud
 import matplotlib.pyplot as plot
 # this import style WILL ONLY work in pycharm
-from scraping.classificationstation import OKCdb, NUM_OF_PROFILES
-from scraping.cloudywords import isFemale, isGay, generate_cloud
+from classificationstation import OKCdb, NUM_OF_PROFILES
+from cloudywords import isFemale, isGay, generate_cloud
 
 
-FONT_PATH = "C:/Windows/Fonts/oomic.ttf"
+FONT_PATH = "C:\Windows\Fonts\Fecske.ttf"
 
 
 def generate_tfidf_cloud(tuple_list, maskIn):
