@@ -9,7 +9,8 @@ from scraping.classificationstation import OKCdb, NUM_OF_PROFILES
 from scraping.cloudywords import isFemale, isGay, generate_cloud
 
 
-FONT_PATH = "C:/Windows/Fonts/oomic.ttf"
+# edit this to not use comic sans, I GUESS.
+FONT_PATH = "comic.ttf"
 
 
 def generate_tfidf_cloud(tuple_list, maskIn):
@@ -119,10 +120,46 @@ def tfidf_gender(db):
         generate_tfidf_cloud(tuple_lists[i], None)
 
 
+def tfidf_lookingfor(db):
+    women_text = ""
+    men_text = ""
+    everyone_text = ""
+    for i in range(1, NUM_OF_PROFILES+1):
+        tiptup = db.getText_byID(i)
+        if tiptup is not None:
+            if db.getLookingFor_byID(i)[0] == " Women ":
+                women_text += '\r'.join(tiptup)
+            elif db.getLookingFor_byID(i)[0] == " Men ":
+                men_text += '\r'.join(tiptup)
+            elif db.getLookingFor_byID(i)[0] == " Everyone ":
+                everyone_text += '\r'.join(tiptup)
+    corpus = [women_text, men_text, everyone_text]
+    tuple_lists = tf_idf(corpus)
+    for i in range(len(tuple_lists)):
+        # print(tuple_list)
+        generate_tfidf_cloud(tuple_lists[i], None)
+
+
+def tfidf_orientation(db):
+    gay_text = ""
+    straight_text = ""
+    for i in range(1, NUM_OF_PROFILES+1):
+        tiptup = db.getText_byID(i)
+        if tiptup is not None:
+            if isGay(i, db):
+                gay_text += '\r'.join(tiptup)
+            else:
+                straight_text += '\r'.join(tiptup)
+    corpus = [gay_text, straight_text]
+    tuple_lists = tf_idf(corpus)
+    for i in range(len(tuple_lists)):
+        # print(tuple_list)
+        generate_tfidf_cloud(tuple_lists[i], None)
+
+
 def main():
     db = OKCdb("profiles.db")
-    generate_cloud("this is a test of things and more things or something i guess", None)
-    tfidf_gender(db)
+    tfidf_lookingfor(db)
 
 if __name__ == "__main__":
     main()
