@@ -1,6 +1,9 @@
 __author__ = 'Kelly'
 
 import math
+import numpy as np
+from PIL import Image
+from os import path
 from textblob import TextBlob
 from wordcloud import WordCloud
 import matplotlib.pyplot as plot
@@ -11,6 +14,7 @@ from cloudywords import isFemale, isGay, generate_cloud
 
 FONT_PATH = "C:\Windows\Fonts\Fecske.ttf"
 
+d = path.dirname(__file__)
 
 gal_mask = np.array(Image.open(path.join(d, "cloudimg/lady.png")))
 guy_mask = np.array(Image.open(path.join(d, "cloudimg/dude.png")))
