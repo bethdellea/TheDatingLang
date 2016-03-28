@@ -55,7 +55,8 @@ def tf_idf(documents):
     # print(index)
 
     # figure out weights, w = tf * idf / magnitude
-    # tf = 1 + log(<number of occurrences of term>)
+    # DAMPENED tf = 1 + log(<number of occurrences of term>)
+    # BORING TF: just the raw term frequency with no dampening. toggle the comments below
     # idf = log(<number of total documents>/<number of documents in which term appears>)
     # magnitude = sqrt( sum of squared raw_w )
 
@@ -71,7 +72,9 @@ def tf_idf(documents):
         idf = math.log(len(documents)/df)
 
         for i in range(len(index[term])):
+            # DAMPENED
             tf = math.log1p(index[term][i])
+            # BORING tf = index[term][i]
             # unnormalized weight = tf * idf
             raw_w = tf * idf
             # overwrite the actual term frequency with the raw weight
@@ -105,6 +108,9 @@ def tfidf_gender(db):
     male_text = ""
     nb_text = ""
     for i in range(1, NUM_OF_PROFILES+1):
+        # there is an errant frenchman
+        if i == 1467:
+            continue
         tiptup = db.getText_byID(i)
         if tiptup is not None:
             if isFemale(i, db):
@@ -125,6 +131,9 @@ def tfidf_lookingfor(db):
     men_text = ""
     everyone_text = ""
     for i in range(1, NUM_OF_PROFILES+1):
+        # there is an errant frenchman
+        if i == 1467:
+            continue
         tiptup = db.getText_byID(i)
         if tiptup is not None:
             if db.getLookingFor_byID(i)[0] == " Women ":
@@ -144,6 +153,9 @@ def tfidf_orientation(db):
     gay_text = ""
     straight_text = ""
     for i in range(1, NUM_OF_PROFILES+1):
+        # there is an errant frenchman
+        if i == 1467:
+            continue
         tiptup = db.getText_byID(i)
         if tiptup is not None:
             if isGay(i, db):
@@ -160,6 +172,9 @@ def tfidf_orientation(db):
 def main():
     db = OKCdb("profiles.db")
     tfidf_lookingfor(db)
+    tfidf_gender(db)
+    tfidf_orientation(db)
+
 
 if __name__ == "__main__":
     main()
