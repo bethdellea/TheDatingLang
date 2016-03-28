@@ -8,30 +8,23 @@ from textblob import TextBlob
 from wordcloud import WordCloud
 import matplotlib.pyplot as plot
 # this import style WILL ONLY work in pycharm
-from classificationstation import OKCdb, NUM_OF_PROFILES
-from cloudywords import isFemale, isGay, generate_cloud
+from scraping.classificationstation import OKCdb, NUM_OF_PROFILES
+from scraping.cloudywords import isFemale, isGay, gal_mask, guy_mask, none_mask, gay_mask, str_mask
 
 
-FONT_PATH = "C:\Windows\Fonts\Fecske.ttf"
+FONT_PATH = "C:\Windows\Fonts\OpenSans-Regular.ttf"
+# FONT_PATH = "comic.ttf"
 
 d = path.dirname(__file__)
 
-gal_mask = np.array(Image.open(path.join(d, "cloudimg/lady.png")))
-guy_mask = np.array(Image.open(path.join(d, "cloudimg/dude.png")))
-none_mask = np.array(Image.open(path.join(d, "cloudimg/noneGender.png")))
-gay_mask = np.array(Image.open(path.join(d, "cloudimg/gay.png")))
-str_mask = np.array(Image.open(path.join(d, "cloudimg/str8.png")))
-f_gay_mask = np.array(Image.open(path.join(d, "cloudimg/ladygay.png")))
-m_gay_mask = np.array(Image.open(path.join(d, "cloudimg/mangay.png")))
-
-
 
 def generate_tfidf_cloud(tuple_list, maskIn):
-    cloud = WordCloud(background_color="white", max_font_size=40, relative_scaling=.5, font_path=FONT_PATH,
-                      mask=maskIn, stopwords=None).fit_words(tuple_list)
-    plot.figure()
+    cloud = WordCloud(background_color="white", relative_scaling=.5, font_path=FONT_PATH, max_font_size=76,
+                      mask=maskIn, stopwords=None, height=3000, width=3000).fit_words(tuple_list)
+    plot.figure(dpi=300, figsize=(10, 10))
     plot.imshow(cloud)
     plot.axis("off")
+    plot.savefig("test.svg", format="svg", dpi=300, figsize=(10, 10))
     plot.show()
 
 
@@ -134,9 +127,9 @@ def tfidf_gender(db):
                 male_text += '\r'.join(tiptup)
     corpus = [female_text, male_text, nb_text]
     tuple_lists = tf_idf(corpus)
+    masks = [gal_mask, guy_mask, none_mask]
     for i in range(len(tuple_lists)):
-        # print(tuple_list)
-        generate_tfidf_cloud(tuple_lists[i], None)
+        generate_tfidf_cloud(tuple_lists[i], masks[i])
 
 
 def tfidf_lookingfor(db):
@@ -177,14 +170,15 @@ def tfidf_orientation(db):
                 straight_text += '\r'.join(tiptup)
     corpus = [gay_text, straight_text]
     tuple_lists = tf_idf(corpus)
+    masks = [gay_mask, str_mask]
     for i in range(len(tuple_lists)):
         # print(tuple_list)
-        generate_tfidf_cloud(tuple_lists[i], None)
+        generate_tfidf_cloud(tuple_lists[i], masks[i])
 
 
 def main():
     db = OKCdb("profiles.db")
-    tfidf_lookingfor(db)
+    # tfidf_lookingfor(db)
     tfidf_gender(db)
     tfidf_orientation(db)
 

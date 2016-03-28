@@ -14,17 +14,17 @@ STOPWORDS = { "I'm", "i'm", "I've", "i've", 'i', 'I', 'me', 'my', 'you', 'your',
 d = path.dirname(__file__)
 
 
-gal_mask = np.array(Image.open(path.join(d, "cloudimg/gal.png")))
-guy_mask = np.array(Image.open(path.join(d, "cloudimg/guy.png")))
-none_mask = np.array(Image.open(path.join(d, "cloudimg/none.png")))
-gay_mask = np.array(Image.open(path.join(d, "cloudimg/thuGays.png")))
-str_mask = np.array(Image.open(path.join(d, "cloudimg/thuStr8s.png")))
+gal_mask = np.array(Image.open(path.join(d, "cloudimg/lady2.png")))
+guy_mask = np.array(Image.open(path.join(d, "cloudimg/dude2.png")))
+none_mask = np.array(Image.open(path.join(d, "cloudimg/noneGender.png")))
+gay_mask = np.array(Image.open(path.join(d, "cloudimg/gay.png")))
+str_mask = np.array(Image.open(path.join(d, "cloudimg/str8.png")))
 f_gay_mask = np.array(Image.open(path.join(d, "cloudimg/galgay.png")))
 m_gay_mask = np.array(Image.open(path.join(d, "cloudimg/dudegay.png")))
 
 
 def generate_cloud(text, maskIn):
-    cloud = WordCloud(background_color="white", max_font_size=40, relative_scaling=.5,
+    cloud = WordCloud(background_color="white", relative_scaling=.5,
                       font_path="C:/Windows/Fonts/wensleydale_gothic_nbp.ttf",
                       mask=maskIn, stopwords=STOPWORDS).generate(text)
     plot.figure()
