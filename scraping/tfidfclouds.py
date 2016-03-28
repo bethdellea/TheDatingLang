@@ -12,6 +12,16 @@ from cloudywords import isFemale, isGay, generate_cloud
 FONT_PATH = "C:\Windows\Fonts\Fecske.ttf"
 
 
+gal_mask = np.array(Image.open(path.join(d, "cloudimg/lady.png")))
+guy_mask = np.array(Image.open(path.join(d, "cloudimg/dude.png")))
+none_mask = np.array(Image.open(path.join(d, "cloudimg/noneGender.png")))
+gay_mask = np.array(Image.open(path.join(d, "cloudimg/gay.png")))
+str_mask = np.array(Image.open(path.join(d, "cloudimg/str8.png")))
+f_gay_mask = np.array(Image.open(path.join(d, "cloudimg/ladygay.png")))
+m_gay_mask = np.array(Image.open(path.join(d, "cloudimg/mangay.png")))
+
+
+
 def generate_tfidf_cloud(tuple_list, maskIn):
     cloud = WordCloud(background_color="white", max_font_size=40, relative_scaling=.5, font_path=FONT_PATH,
                       mask=maskIn, stopwords=None).fit_words(tuple_list)
