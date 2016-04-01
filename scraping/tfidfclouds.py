@@ -19,12 +19,12 @@ d = path.dirname(__file__)
 
 
 def generate_tfidf_cloud(tuple_list, maskIn):
-    cloud = WordCloud(background_color="white", relative_scaling=.5, font_path=FONT_PATH, max_font_size=76,
+    cloud = WordCloud(background_color="white", relative_scaling=.5, font_path=FONT_PATH, max_font_size=100,
                       mask=maskIn, stopwords=None, height=3000, width=3000).fit_words(tuple_list)
     plot.figure(dpi=300, figsize=(10, 10))
     plot.imshow(cloud)
     plot.axis("off")
-    plot.savefig("test.svg", format="svg", dpi=300, figsize=(10, 10))
+    plot.savefig("test.png", format="png", dpi=300, figsize=(10, 10))
     plot.show()
 
 
