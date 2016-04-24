@@ -14,34 +14,102 @@ def parseAndQuery(db, toSearch):
 
 def displayResults(toShow, toSearch):
     '''prints out demographics and the section of their profile the phrase appears in'''
-    #leveled up function TODO --- print out which section it was from and just the sentence it appeared in
-    #make own functio and choice in loop I think, will do after sleeping maybe
     print("Total profiles containing ", toSearch, ": ", len(toShow))
+    wordCount = 0
+    for item in toShow:   #group of all profiles returned by db
+        for i in range(6, 16):
+            sectBlob = TextBlob(item[i])
+            wds = sectBlob.words
+            for word in wds:
+                currWord = str(word)
+                if not currWord.isdigit():
+                    currWord = currWord.lower()
+                if not toSearch.isdigit():
+                    toSearch = toSearch.lower()
+                if currWord == toSearch:
+                    wordCount = wordCount + 1
+    print(toSearch, " was used a total of ", wordCount, "times in those profiles.\n")
+    sentOrAll = input("Enter 'sentence' to view your input in the sentences where it\
+    was used. Enter 'whole' to view the whole section of the profile it was from. ")
+    
     toSearch = toSearch.lower()
+    if sentOrAll.lower() == 'sentence':
+        justSents(toShow, toSearch)
+    if sentOrAll.lower() == 'whole':
+        wholeSection(toShow, toSearch)
+    else:
+        print("Sorry, that input was invalid. Please start over. :)")
+
+def justSents(toShow, toSearch):
+    '''prints out the searched word as it appears in sentences in the profile, with context
+       of section numbers'''
+    sectionHeads = ["Self Summary: ", "What I'm Doing With My Life: ", "I'm Really Good At: ",
+                    "First Thing People Notice About Me: ", "Fave book/show/movie/food: ",
+                    "6 Things I Can't Live Without: ", "I Spend A Lot of Time Thinking About: ",
+                    "On a Typical Friday Night I Am: ", "A Secret/Confession: ", "Message Me If: "]
     for item in toShow:
         print("\n\n")
         print("ID #: ", item[0], "\tGender: ", item[1], "\tAge: ", item[4], "\tLocation: ", item[5])
         print("Orientation: ", item[2], "\tLookinng For: ",item[3])
-        if toSearch in item[6] or toSearch.capitalize() in item[6] or toSearch.upper() in item[6]:
-            print("Self Summary: ", item[6])
-        if toSearch in item[7] or toSearch.capitalize() in item[7] or toSearch.upper() in item[7]:
-            print("What I'm Doing With My Life: ", item[7])
-        if toSearch in item[8] or toSearch.capitalize() in item[8] or toSearch.upper() in item[8]:
-            print("I'm Really Good At: ",  item[8])
-        if toSearch in item[9] or toSearch.capitalize() in item[9] or toSearch.upper() in item[9]:
-            print("First Thing People Notice About Me: ", item[9])
-        if toSearch in item[10] or toSearch.capitalize() in item[10] or toSearch.upper() in item[10]:
-            print("Fave books/movies/shows/foods: ", item[10])
-        if toSearch in item[11] or toSearch.capitalize() in item[11] or toSearch.upper() in item[11]:
-            print("6 Things I Can't Do Without: ", item[11])
-        if toSearch in item[12] or toSearch.capitalize() in item[12] or toSearch.upper() in item[12]:
-            print("I Spend A Lot of Time Thiking About: ", item[12])
-        if toSearch in item[13] or toSearch.capitalize() in item[13] or toSearch.upper() in item[13]:
-            print("On a Typical Friday Night I Am: ", item[13])
-        if toSearch in item[14] or toSearch.capitalize() in item[14] or toSearch.upper() in item[14]:
-            print("A Secret/Confession: ", item[14])
-        if toSearch in item[15] or toSearch.capitalize() in item[15] or toSearch.upper() in item[15]:
-            print("Message Me If: ", item[15])
+        for i in range(6, 16):
+            headPrinted = False
+            #each of the profile sections with content
+            #header location will be i-6
+            sectBlob = TextBlob(item[i])
+            sents = sectBlob.sentences
+            for sent in sents:
+                sentPrinted = False
+                words = sent.words
+                for word in words:
+                    currWord = str(word)
+                    if not currWord.isdigit():
+                        currWord = currWord.lower()
+                    if not toSearch.isdigit():
+                        toSearch = toSearch.lower()
+                    if currWord == toSearch:
+                        if not headPrinted:
+                            print(sectionHeads[i-6])
+                            headPrinted = True
+                        print (sent)
+                        break
+                
+
+def wholeSection(toShow, toSearch):
+    '''prints out the entire profile section where a word occurs, including context'''
+    sectionHeads = ["Self Summary: ", "What I'm Doing With My Life: ", "I'm Really Good At: ",
+                    "First Thing People Notice About Me: ", "Fave book/show/movie/food: ",
+                    "6 Things I Can't Live Without: ", "I Spend A Lot of Time Thinking About: ",
+                    "On a Typical Friday Night I Am: ", "A Secret/Confession: ", "Message Me If: "]
+    for item in toShow:
+        
+        print("\n\n")
+        print("ID #: ", item[0], "\tGender: ", item[1], "\tAge: ", item[4], "\tLocation: ", item[5])
+        print("Orientation: ", item[2], "\tLookinng For: ",item[3])
+        for i in range(6, 16):
+            #each of the profile sections with content
+            #header location will be i-6
+            headPrinted = False
+            sectBlob = TextBlob(item[i])
+            sents = sectBlob.sentences
+            wordFound = False
+            if wordFound == False: 
+                for sent in sents:
+                    if wordFound == False: 
+                        words = sent.words
+                        for word in words:
+                            currWord = str(word)
+                            if not currWord.isdigit():
+                                currWord = currWord.lower()
+                            if not toSearch.isdigit():
+                                toSearch = toSearch.lower()
+                            if currWord == toSearch:
+                                wordFound = True
+                                if not headPrinted:
+                                    print(sectionHeads[i-6])
+                                    headPrinted = True
+                                    print (item[i])
+                                break
+                    
     #this is gonna require some more precise formatting I guess :/
     '''
     profile sections:
