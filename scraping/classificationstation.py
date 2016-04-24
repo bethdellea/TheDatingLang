@@ -92,6 +92,19 @@ class OKCdb(object):
         else:
             return reslist[0]
 
+    def getProfile_byContains(self, phrase):
+        '''returns EVERYTHING for the row which contains searched phrases
+          if there is no matching contents, returns a None'''
+        sql = "SELECT * from Users WHERE profile0 LIKE '" + phrase + "' OR profile1 LIKE '" + phrase + "' OR profile2 LIKE '" + phrase + "' OR profile3 LIKE \
+        '" + phrase + "' OR profile4 LIKE '" + phrase + "' OR profile5 LIKE '" + phrase + "' OR profile6 LIKE '" + phrase + "' OR profile7 LIKE \
+        '" + phrase + "' OR profile8 LIKE '" + phrase + "' OR profile9 LIKE '" + phrase + "'"
+        res = self.execute(sql)
+        reslist = res.fetchall()
+        if(reslist) == []:
+            return None
+        else:
+            return reslist
+
     def getText_byID(self, user_id):
         """
         Returns tha text from profiles for the row in some mysterious format
