@@ -29,16 +29,22 @@ def displayResults(toShow, toSearch):
                 if currWord == toSearch:
                     wordCount = wordCount + 1
     print(toSearch, " was used a total of ", wordCount, "times in those profiles.\n")
-    sentOrAll = input("Enter 'sentence' to view your input in the sentences where it\
-    was used. Enter 'whole' to view the whole section of the profile it was from. ")
-    
-    toSearch = toSearch.lower()
-    if sentOrAll.lower() == 'sentence':
-        justSents(toShow, toSearch)
-    if sentOrAll.lower() == 'whole':
-        wholeSection(toShow, toSearch)
+    if wordCount > 0:
+            
+        sentOrAll = input("Enter 'sentence' to view your input in the sentences where it\
+        was used. Enter 'whole' to view the whole section of the profile it was from. \nEnter '-1' to leave without displaying anything further.")
+            
+        toSearch = toSearch.lower()
+        if sentOrAll.lower() == 'sentence':
+            justSents(toShow, toSearch)
+        elif sentOrAll.lower() == 'whole':
+            wholeSection(toShow, toSearch)
+        elif sentOrAll == "-1":
+            print("Okay, let's try a new entry.")
+        else:
+            print("Sorry, that input was invalid. Please start over. :)")
     else:
-        print("Sorry, that input was invalid. Please start over. :)")
+        print("Sorry, better luck with another choice.")
 
 def justSents(toShow, toSearch):
     '''prints out the searched word as it appears in sentences in the profile, with context
@@ -48,10 +54,10 @@ def justSents(toShow, toSearch):
                     "6 Things I Can't Live Without: ", "I Spend A Lot of Time Thinking About: ",
                     "On a Typical Friday Night I Am: ", "A Secret/Confession: ", "Message Me If: "]
     for item in toShow:
-        print("\n\n")
-        print("ID #: ", item[0], "\tGender: ", item[1], "\tAge: ", item[4], "\tLocation: ", item[5])
-        print("Orientation: ", item[2], "\tLookinng For: ",item[3])
+        userHead = "\n\nID #: " + str(item[0]) +  "\tGender: " +  item[1] + "\tAge: " + str(item[4]) + "\nLocation: " + item[5] + "\tOrientation: " + item[2] + "\tLooking For: " + item[3]
+        demosPrinted = False
         for i in range(6, 16):
+           
             headPrinted = False
             #each of the profile sections with content
             #header location will be i-6
@@ -67,6 +73,9 @@ def justSents(toShow, toSearch):
                     if not toSearch.isdigit():
                         toSearch = toSearch.lower()
                     if currWord == toSearch:
+                        if not demosPrinted:
+                            print(userHead)
+                            demosPrinted = True
                         if not headPrinted:
                             print(sectionHeads[i-6])
                             headPrinted = True
@@ -81,13 +90,12 @@ def wholeSection(toShow, toSearch):
                     "6 Things I Can't Live Without: ", "I Spend A Lot of Time Thinking About: ",
                     "On a Typical Friday Night I Am: ", "A Secret/Confession: ", "Message Me If: "]
     for item in toShow:
-        
-        print("\n\n")
-        print("ID #: ", item[0], "\tGender: ", item[1], "\tAge: ", item[4], "\tLocation: ", item[5])
-        print("Orientation: ", item[2], "\tLookinng For: ",item[3])
+        userHead = "\n\nID #: " + str(item[0]) +  "\tGender: " +  item[1] + "\tAge: " + str(item[4]) + "\nLocation: " + item[5] + "\tOrientation: " + item[2] + "\tLooking For: " + item[3]
+
         for i in range(6, 16):
             #each of the profile sections with content
             #header location will be i-6
+            demosPrinted = False
             headPrinted = False
             sectBlob = TextBlob(item[i])
             sents = sectBlob.sentences
@@ -104,7 +112,11 @@ def wholeSection(toShow, toSearch):
                                 toSearch = toSearch.lower()
                             if currWord == toSearch:
                                 wordFound = True
+                                if not demosPrinted:
+                                    print(userHead)
+                                    demosPrinted = True
                                 if not headPrinted:
+                                    
                                     print(sectionHeads[i-6])
                                     headPrinted = True
                                     print (item[i])
@@ -141,7 +153,10 @@ def main():
     toSearch = input("Enter a phrase to search the profiles for: ")
     while toSearch != "-1":
         toShow = parseAndQuery(db, toSearch)
-        displayResults(toShow, toSearch)
+        if(toShow != None):
+            displayResults(toShow, toSearch)
+        else:
+            print("We're sorry, the input you are searching for is not available. ")
         toSearch = input("Enter a phrase to search the profiles for: ")
     print("Wasn't that fun???? Come back soon!")
 
