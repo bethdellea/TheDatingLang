@@ -50,3 +50,4 @@ scraping/profiles
 
 # get out of here python
 .idea
+*.pyc
