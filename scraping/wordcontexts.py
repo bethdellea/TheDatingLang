@@ -1,7 +1,7 @@
 #Beth fooling aroud while trying to get contexts for phrasings
 #April 23/24, 2016 (technically it's the 24th but I haven't gone to sleep yet)
 
-from classificationstation import OKCdb, NUM_OF_PROFILES
+from justDB import OKCdb, NUM_OF_PROFILES
 from textblob import TextBlob
 
 # added getProfile_byContains(self, phrase) to OKCdb in parser.py and classificationstation.py
