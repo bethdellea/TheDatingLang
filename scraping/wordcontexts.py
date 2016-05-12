@@ -43,7 +43,7 @@ def displayResults(toShow, toSearch):
         elif sentOrAll.lower() == 'whole':
             wholeSection(toShow, toSearch)
         elif sentOrAll == "-1":
-            print("Okay, let's try a new entry.")
+            print("Okay, let's try a new entry.\n\n\n\n")
         else:
             print("Sorry, that input was invalid. Please start over. :)")
     else:
@@ -84,6 +84,7 @@ def justSents(toShow, toSearch):
                             headPrinted = True
                         print (sent)
                         break
+    print("\n\n\n\n\n")
                 
 
 def wholeSection(toShow, toSearch):
@@ -124,6 +125,7 @@ def wholeSection(toShow, toSearch):
                                     headPrinted = True
                                     print (item[i])
                                 break
+    print("\n\n\n\n\n")
                     
     #this is gonna require some more precise formatting I guess :/
     '''
