@@ -4,6 +4,9 @@
 from justDB import OKCdb, NUM_OF_PROFILES
 from textblob import TextBlob
 
+#justDB is the database functions from classficationstation, but on its own
+    # so that scikit-learn and  numpy and all that fun stuff is not needed to run
+
 # added getProfile_byContains(self, phrase) to OKCdb in parser.py and classificationstation.py
 # it should be a big help here
 
